@@ -1,0 +1,82 @@
+#!/usr/bin/env node
+// This file has been shamelessly generarted fomr the placeholder_solution.py tile usng ChatGPT
+// Run with: node placeholder_solution.js < tests/eval-3-3-12.puzzle
+
+const readline = require('readline');
+
+class Brick {
+    constructor(colours, scores) {
+        this.colours = colours;
+        this.scores = scores;
+    }
+}
+
+function readInput(inputLines) {
+    const lines = inputLines.trim().split('\n');
+
+    if (lines.length === 0) {
+        throw new Error('Input is empty');
+    }
+
+    const problemData = lines[0].split(' ');
+
+    if (problemData.length !== 3) {
+        throw new Error('Problem description is invalid');
+    }
+
+    const numColors = parseInt(problemData[0]);
+    const num_columns = parseInt(problemData[1]);
+    const numBricks = parseInt(problemData[2]);
+
+    const bricks = [];
+    for (let i = 1; i < lines.length; i++) {
+        const blockData = lines[i].split(' ');
+        const data = blockData.map(Number);
+
+        const colours = [];
+        const scores = [];
+        for (let j = 0; j < data.length; j += 2) {
+            colours.push(data[j]);
+            scores.push(data[j + 1]);
+        }
+
+        bricks.push(new Brick(colours, scores));
+    }
+
+    return [numColors, num_columns, bricks];
+}
+
+async function main() {
+    const rl = readline.createInterface({
+        input: process.stdin,
+        output: process.stdout,
+        terminal: false
+    });
+
+    const inputLines = [];
+    for await (const line of rl) {
+        inputLines.push(line);
+    }
+
+    rl.close();
+
+    try {
+        const [numColors, num_columns, bricks] = readInput(inputLines.join('\n'));
+
+        // PLACE YOUR SOLUTION HERE
+
+        // A placeholder algorithm:
+        // Print the score of the first brick
+        console.log(bricks[0].scores.reduce((acc, val) => acc + val, 0));
+
+        // Print the index of the first brick
+        console.log("0");
+
+    } catch (error) {
+        console.error(error.message);
+    }
+}
+
+if (require.main === module) {
+    main();
+}
